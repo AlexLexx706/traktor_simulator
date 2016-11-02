@@ -3,8 +3,8 @@
 
 class BaseReader{
 public:
-    BaseReader();
-    virtual ~BaseReader();
+    BaseReader(){};
+    virtual ~BaseReader(){};
     virtual int read(void * buffer, unsigned int buffer_size) = 0;
 };
 
