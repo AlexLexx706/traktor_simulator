@@ -8,4 +8,5 @@ public:
     virtual int read(void * buffer, unsigned int buffer_size) = 0;
 };
 
+
 #endif
