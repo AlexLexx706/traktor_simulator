@@ -6,7 +6,7 @@ LDFLAGS=-lX11 -lGL -lGLU -lglut
 
 all: main
 	
-main: test.o file_reader.o SMat.o base_item.o
+main: test.o file_reader.o SMat.o base_shape.o box.o
 	$(CC) -o main test.o file_reader.o SMat.o $(LDFLAGS)
 
 test.o: simulator/test.cpp  
@@ -15,8 +15,11 @@ test.o: simulator/test.cpp
 SMat.o: simulator/common/SMat.h simulator/common/SMat.cc 
 	$(CC) $(CFLAGS) simulator/common/SMat.cc
 
-base_item.o: simulator/items/base_item.h simulator/items/base_item.cpp 
-	$(CC) $(CFLAGS) simulator/items/base_item.cpp
+base_shape.o: simulator/engine/shapes/base_shape.h simulator/engine/shapes/base_shape.cpp 
+	$(CC) $(CFLAGS) simulator/engine/shapes/base_shape.cpp
+
+box.o: simulator/engine/shapes/base_shape.h simulator/engine/shapes/box/box.h simulator/engine/shapes/box/box.cpp 
+	$(CC) $(CFLAGS) simulator/engine/shapes/box/box.cpp
 
 
 file_reader.o: simulator/reader/file_reader/file_reader.cpp simulator/reader/file_reader/file_reader.h simulator/reader/base_reader.h
