@@ -55,6 +55,7 @@ bool BaseShape::RemoveChild(BaseShape * child){
          return false;
     }
     childs.erase(iter->second);
+    child_map.erase(iter);
     return true;
 }
 

@@ -15,7 +15,7 @@ public:
 
 protected:
     std::list<BaseShape *> shapes;
-    std::map<BaseShape *, std::list<BaseShape *>::iterator> child_map;
+    std::map<BaseShape *, std::list<BaseShape *>::iterator> shapes_map;
 };
 #endif // __BASE_ITEM__
 
