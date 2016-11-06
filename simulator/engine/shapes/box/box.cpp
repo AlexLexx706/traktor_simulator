@@ -5,7 +5,10 @@ Box::Box():
     width(10.),
     height(10.),
     list_id(-1){
-};
+}
+
+Box::~Box(){
+}
 
 void Box::Reshape(){
     if (glIsList(list_id)){
@@ -16,12 +19,12 @@ void Box::Reshape(){
     glNewList(list_id, GL_COMPILE);
     glBegin(GL_QUADS);
     glColor4d(color.r, color.g, color.b, color.a);
-    double w_2=width/2;
-    double h_2=height/2;
-    glVertex2i(-w_2, -h_2);
-    glVertex2i(w_2, -h_2);
-    glVertex2i(w_2, h_2);
-    glVertex2i(-w_2, h_2);
+    double w_2=width/2.0;
+    double h_2=height/2.0;
+    glVertex2d(-w_2, -h_2);
+    glVertex2d(w_2, -h_2);
+    glVertex2d(w_2, h_2);
+    glVertex2d(-w_2, h_2);
     glEnd(); 
     glEndList();
 } 
@@ -29,3 +32,5 @@ void Box::Reshape(){
 void Box::Draw(){
     glCallList(list_id);
 }
+
+

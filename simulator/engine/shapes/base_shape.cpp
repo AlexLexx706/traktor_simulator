@@ -1,8 +1,8 @@
 #include "base_shape.h"
 #include <GL/glut.h>
 
-BaseShape::BaseShape():angle(0.){
-
+BaseShape::BaseShape():
+    reshape(true), angle(0.),cross_len(1.0),show_cross(true){
 };
 
 BaseShape::~BaseShape(){
@@ -64,10 +64,30 @@ void BaseShape::Update(){
         Reshape();
         reshape=false;
     }
-    Draw();
     glPushMatrix();
-    glRotated(angle, 0.0f, 0.0f, 1.0f);
-    glTranslated(pos.x0, pos.x1, pos.x1);
+    glTranslated(pos.x0, pos.x1, pos.x2);
+    glRotated(angle / M_PI * 180.0, 0.0f, 0.0f, 1.0f);
     Draw();
+    
+    if (show_cross){
+        drawCross();
+    }
+
+    for (std::list<BaseShape *>::iterator iter=childs.begin(), end=childs.end();
+        iter != end; iter++) {
+        (*iter)->Update();
+    }
     glPopMatrix();
+}
+
+void BaseShape::drawCross(){
+    glBegin(GL_LINES);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex2f(0.0, 0.0);
+    glVertex2f(cross_len, 0);
+
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex2f(0.0, 0.0);
+    glVertex2f(0, cross_len);
+    glEnd();
 }

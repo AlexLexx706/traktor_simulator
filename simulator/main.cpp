@@ -3,39 +3,48 @@
 #include "reader/file_reader/file_reader.h"
 #include "common/SMat.h"
 #include "engine/scene/scene.h"
+#include "engine/shapes/box/box.h"
+#include "engine/tractor/tractor.h"
+#include "engine/camera/camera.h"
 #include <iostream>
+#include "common/coordinat_converter/coordinat_converter.h"
 
-const int WIDTH=400;
-const int HEIGHT=400;
+
 Scene scene;
+Box * box(new Box());
+double step=0;
+Tractor * tractor(new Tractor());
 
 void Display() {
-    glClear(GL_COLOR_BUFFER_BIT); 
     scene.Update();
-    glutSwapBuffers();
-}
-
-void Reshape(int w, int h) {
-    glViewport(0, 0, w, h);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, w, 0, h);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    for (std::list<BaseShape *>::iterator iter = scene.GetShapes().begin(), end=scene.GetShapes().end();
+        iter != end; iter++) {
+        (*iter)->setAngle((*iter)->getAngle() + step * scene.GetDt());
+    }
 }
 
 
 int main(int argc, char ** argv) {
-    std::cout << "hi" << std::endl;
+    //scene.AddShape(box);
+    std::cout << "ned: " << ecef_to_ned(+2829169.83, +2208058.32, +5255180.65) << std::endl;
+    FileReader reader;
+    reader.open("tasks/sample.dat", 3);
+    
+
+    scene.AddShape(tractor);
+    //scene.getCamera()->setY(10);
+    //scene.getCamera()->setAngle(0.5);
+    scene.getCamera()->setSize(10,10);
+    tractor->setWheelsAngle(1);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    glutInitWindowSize(WIDTH, HEIGHT);
-    glutInitWindowPosition(100, 200);
-    glutReshapeFunc(Reshape);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glDisable(GL_DEPTH_TEST);
+    glutInitWindowSize(100, 100);
+    glutInitWindowPosition(0, 0);
     glutCreateWindow("Tractor simulator");
     glutDisplayFunc(Display);
-    Reshape(WIDTH, HEIGHT);
+    glutIdleFunc(Display);
     glutMainLoop();
     return 0;
 }

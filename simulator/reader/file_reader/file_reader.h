@@ -6,9 +6,10 @@ class FileReader: public BaseReader{
 public:
     FileReader();
     ~FileReader();
-    virtual int read(void * buffer, unsigned int buffer_size);
+    bool open(const char* file_name, std::size_t max_count=0);
+    virtual const std::list<BaseReader::Data> & get_gata() const {return data;};
 private:
-    int test;
+    std::list<BaseReader::Data> data;
 };
 
 #endif

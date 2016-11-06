@@ -3,9 +3,8 @@
 
 struct Color{
     double r,g,b,a;
-    Color():r(1.0),g(1.0),b(1.0),a(1.0){}
-    Color(double _r, double _g,double _b, double _a):
-        r(_r),g(_g),b(_b){}
+    Color(double _r=1.0, double _g=1.0, double _b=1.0, double _a=1.0):
+        r(_r), g(_g), b(_b), a(_a){}
 };
 
 #endif // __BOX__

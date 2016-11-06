@@ -5,6 +5,8 @@
 
 
 #include <math.h>
+#include <iostream>
+
 #ifndef M_PI
 	#define M_PI 3.1415926535897932384626433832795
 #endif
@@ -96,6 +98,10 @@ SMat transpose( const SMat & A );
 void assign( double a[3], const SVec & b );
 
 
+
+inline std::ostream &operator<<(std::ostream &os, SVec const &m) { 
+    return os << "x:" << m.x0 << " y:" << m.x1 << " z:" << m.x2;
+}
 
 #endif // _SMAT_H_
 
