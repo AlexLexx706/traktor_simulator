@@ -12,11 +12,15 @@ public:
     virtual bool start();
     virtual bool stop();
     virtual void get_data(Data & out_date) const;
+
 protected:
     BaseReader & reader;
     std::list<BaseReader::Data>::const_iterator cur_sample;
+    std::list<BaseReader::Data>::const_iterator next_sample;
     BaseTractorModel::Data data;
+    Mutex mutex;
     void run();
+    void update_data();
 };
 
 #endif // __BOX__
