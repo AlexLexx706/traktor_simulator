@@ -7,6 +7,7 @@ public:
     ~Thread();
     int start();
     int join();
+    bool is_active() const;
     virtual void run();
     //sleep microsecond
     static void sleep(unsigned int);

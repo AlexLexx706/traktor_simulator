@@ -15,21 +15,17 @@ public:
 
         // ориентация модели трактора в рад. 0- направлен по оси y.
         double angle;
+
+        //скорость трактора
+        double speed;
+
+        //time in ms
+        unsigned int time;
     };
 
     virtual bool start() = 0;
-
     virtual bool stop() = 0;
-
-    virtual SVec get_pos() const = 0;
-
-    virtual double get_speed() const = 0;
-
-    virtual unsigned int get_time() const = 0;
-
-    virtual SVec get_angle() const = 0;
-
-    virtual double get_wheel_angle() const = 0;
+    virtual void get_data(Data & out_date) const = 0;
 };
 
 #endif // __BOX__

@@ -34,6 +34,9 @@ struct Data {
         thread=0;
         return 0;
     }
+    bool is_active(){
+        return thread != 0;
+    }
 };
 
 
@@ -51,6 +54,10 @@ int Thread::start(){
 
 int Thread::join() {
     return static_cast<Data*>(data)->join();
+}
+
+bool Thread::is_active() const{
+    return static_cast<Data*>(data)->is_active();   
 }
 
 void Thread::run(){
