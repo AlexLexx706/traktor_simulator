@@ -15,13 +15,19 @@ Scene scene;
 Box * box(new Box());
 double step=0;
 Tractor * tractor(new Tractor());
+RealDataTractorModel * model(NULL);
+BaseTractorModel::Data model_data;
 
 void Display() {
     scene.Update();
-    for (std::list<BaseShape *>::iterator iter = scene.GetShapes().begin(), end=scene.GetShapes().end();
-        iter != end; iter++) {
-        (*iter)->setAngle((*iter)->getAngle() + step * scene.GetDt());
-    }
+    // for (std::list<BaseShape *>::iterator iter = scene.GetShapes().begin(), end=scene.GetShapes().end();
+    //     iter != end; iter++) {
+    //     (*iter)->setAngle((*iter)->getAngle() + step * scene.GetDt());
+    // }
+    model->get_data(model_data);
+    tractor->setPos(model_data.pos);
+    tractor->setAngle(model_data.angle);
+
 }
 
 class TestThread:public Thread{
@@ -51,19 +57,17 @@ private:
 int main(int argc, char ** argv) {
     FileReader reader;
     reader.open("./tasks/sample.dat");
+    model = new RealDataTractorModel(reader);
+    model->start();
+    // Thread::sleep(100000);
+    // model.start();
+    // model.stop();
+    // model.start();
 
-    RealDataTractorModel model(reader);
-    model.start();
-    Thread::sleep(100000);
-    //model.start();
-    model.stop();
-    std::cout << "111" << std::endl;
-    model.start();
-    std::cout << "222" << std::endl;
     scene.AddShape(tractor);
     //scene.getCamera()->setY(10);
     //scene.getCamera()->setAngle(0.5);
-    scene.getCamera()->setSize(10,10);
+    scene.getCamera()->setSize(100,100);
     tractor->setWheelsAngle(1);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);

@@ -70,7 +70,8 @@ void RealDataTractorModel::update_data(){
         const BaseReader::Data & cur(*cur_sample);
         data.pos = (cur.ned_pos - first.ned_pos) * EARTH_RADIUS;
         data.wheel_angle = 0.0;
-        data.angle = data.angle;
+       // data.angle = data.angle;
+        data.angle = 0.0;
         data.speed = cur.speed;
         data.time = cur.time - first.time;
     } else {
@@ -84,7 +85,8 @@ void RealDataTractorModel::update_data(){
         double dir_len(dir.length());
         dir /= dir_len;
         // рассёт угла и знака угла
-        data.angle = dir_len != 0.0 ? acos(dir.x1/dir_len) * (-dir.x0 > 0 ? 1.0 : -1.0) : 0.0;
+        //data.angle = dir_len != 0.0 ? acos(dir.x1/dir_len) * (-dir.x0 > 0 ? 1.0 : -1.0) : 0.0;
+        data.angle = 0.0;
         data.speed = cur.speed;
         data.time = cur.time - first.time;
     }

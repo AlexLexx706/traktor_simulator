@@ -29,6 +29,7 @@ bool FileReader::open(const char* file_name, std::size_t max_count) {
         file >> sample.time >> sample.ecef_pos.x0 >> sample.ecef_pos.x1 >> sample.ecef_pos.x2 >> temp >> temp >> temp >> sample.speed >> temp >> temp >> sample.azimut >> temp >> temp_int; 
         //std::cout << sample << std::endl;
         sample.ned_pos = ecef_to_ned(sample.ecef_pos.x0, sample.ecef_pos.x1, sample.ecef_pos.x2);
+        sample.ned_pos.x2 = 0.0;
         data.push_back(sample);
         if (max_count > 0 and data.size() >= max_count){
             return true;
