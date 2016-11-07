@@ -29,4 +29,10 @@ public:
     virtual void get_data(Data & out_date) const = 0;
 };
 
+inline std::ostream &operator<<(std::ostream &os, BaseTractorModel::Data const &m) { 
+    return os << "pos:" << m.pos << " wheel_angle:" << m.wheel_angle
+        << " angle:" << m.angle << " speed:" << m.speed << " time:" << m.time; 
+}
+
+
 #endif // __BOX__

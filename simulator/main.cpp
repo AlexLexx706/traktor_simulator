@@ -9,6 +9,7 @@
 #include <iostream>
 #include "common/coordinat_converter/coordinat_converter.h"
 #include "common/thread/thread.h"
+#include "tractor_model/real_data_tractor_model/real_data_tractor_model.h"
 
 Scene scene;
 Box * box(new Box());
@@ -49,9 +50,16 @@ private:
 
 int main(int argc, char ** argv) {
     FileReader reader;
-    TestThread thread1;
-    thread1.start();
-    thread1.set_value(12);
+    reader.open("./tasks/sample.dat");
+
+    RealDataTractorModel model(reader);
+    model.start();
+    Thread::sleep(100000);
+    //model.start();
+    model.stop();
+    std::cout << "111" << std::endl;
+    model.start();
+    std::cout << "222" << std::endl;
     scene.AddShape(tractor);
     //scene.getCamera()->setY(10);
     //scene.getCamera()->setAngle(0.5);

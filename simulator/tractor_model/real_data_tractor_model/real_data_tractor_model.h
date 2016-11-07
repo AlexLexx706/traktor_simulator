@@ -19,6 +19,7 @@ protected:
     std::list<BaseReader::Data>::const_iterator next_sample;
     BaseTractorModel::Data data;
     Mutex mutex;
+    bool stop_flag;
     void run();
     void update_data();
 };

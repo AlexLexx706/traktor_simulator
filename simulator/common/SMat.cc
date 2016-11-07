@@ -98,6 +98,11 @@ SVec SVec::operator - ( const SVec & b ) const
 {
 	return SVec( x0 - b.x0, x1 - b.x1, x2 - b.x2 );
 }
+
+double SVec::length() const{
+    return sqrt(x0*x0 + x1*x1 + x2*x2);
+}
+
 //----------------------------------------------
 void SVec::set( const double val) 
 {

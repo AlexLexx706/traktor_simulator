@@ -1,7 +1,7 @@
 #include "thread.h"
 #include <pthread.h>
 #include <unistd.h>
-
+#include <iostream>
 
 void * thread_fun(void * data) {
     static_cast<Thread *>(data)->run();
@@ -18,8 +18,10 @@ struct Data {
         join();
     }
     int start(){
-        if (thread_id != 0)
+        if (thread_id != 0){
+            std::cerr << "cannot start thread bc thread_id != 0" << std::endl;
             return 1;
+        }
 
         return pthread_create(
             &thread_id, NULL,
@@ -28,10 +30,12 @@ struct Data {
     }
 
     int join(){
-        if (thread_id == 0)
+        if (thread_id == 0) {
+            std::cerr << "cannot join thread bc thread_id == 0" << std::endl;
             return 1;
+        }
         pthread_join(thread_id, NULL);
-        thread=0;
+        thread_id=0;
         return 0;
     }
     bool is_active(){

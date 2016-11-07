@@ -46,6 +46,7 @@ struct  SVec
   SVec & operator += ( const SVec & other ) ;
   SVec operator - ( const SVec & b ) const;
   
+  double length() const;
   double abs_max() const;
   double norm() const;
   void multiply( const SVec & other ) ;
