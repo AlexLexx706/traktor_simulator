@@ -8,7 +8,7 @@
 #include "engine/camera/camera.h"
 #include <iostream>
 #include "common/coordinat_converter/coordinat_converter.h"
-
+#include "common/thread/thread.h"
 
 Scene scene;
 Box * box(new Box());
@@ -23,14 +23,35 @@ void Display() {
     }
 }
 
+class TestThread:public Thread{
+public:
+    void run(){
+        while(1){
+            sleep(1000000);
+            std::cout << get_value() << std::endl;
+        }
+    }
+    void set_value(int _value){
+        Mutex::ContextHelper mh(mutex);
+        sleep(5000000);
+        value=_value;
+    };
+    
+    int get_value() const {
+        Mutex::ContextHelper mh(const_cast<Mutex &>(mutex));
+        return value;
+    }
+
+private:
+    int value;
+    Mutex mutex;
+};
 
 int main(int argc, char ** argv) {
-    //scene.AddShape(box);
-    std::cout << "ned: " << ecef_to_ned(+2829169.83, +2208058.32, +5255180.65) << std::endl;
     FileReader reader;
-    reader.open("tasks/sample.dat", 3);
-    
-
+    TestThread thread1;
+    thread1.start();
+    thread1.set_value(12);
     scene.AddShape(tractor);
     //scene.getCamera()->setY(10);
     //scene.getCamera()->setAngle(0.5);
