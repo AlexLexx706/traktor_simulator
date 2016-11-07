@@ -69,6 +69,7 @@ int main(int argc, char ** argv) {
     //scene.getCamera()->setY(10);
     //scene.getCamera()->setAngle(0.5);
     scene.getCamera()->setSize(100,100);
+    scene.getCamera()->setPos(SVec(0, -50, 0));
     tractor->setWheelsAngle(1);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
