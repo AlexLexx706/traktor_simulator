@@ -14,7 +14,7 @@ public:
     virtual void get_data(Data & out_date) const;
 protected:
     BaseReader & reader;
-    std::list<BaseReader::Data>::iterator cur_sample;
+    std::list<BaseReader::Data>::const_iterator cur_sample;
     BaseTractorModel::Data data;
     void run();
 };

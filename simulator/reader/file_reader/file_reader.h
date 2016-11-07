@@ -7,7 +7,7 @@ public:
     FileReader();
     ~FileReader();
     bool open(const char* file_name, std::size_t max_count=0);
-    virtual const std::list<BaseReader::Data> & get_gata() const {return data;};
+    virtual const std::list<BaseReader::Data> & get_data() const {return data;};
 private:
     std::list<BaseReader::Data> data;
 };

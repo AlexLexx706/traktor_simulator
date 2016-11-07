@@ -29,7 +29,7 @@ public:
     virtual ~BaseReader(){};
 
     //Возвращает данные 
-    virtual const std::list<BaseReader::Data> & get_gata() const = 0;
+    virtual const std::list<BaseReader::Data> & get_data() const = 0;
 };
 
 inline std::ostream &operator<<(std::ostream &os, BaseReader::Data const &m) { 
