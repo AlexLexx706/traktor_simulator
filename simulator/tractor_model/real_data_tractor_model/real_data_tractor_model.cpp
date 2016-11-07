@@ -27,6 +27,12 @@ bool RealDataTractorModel::start() {
     next_sample = cur_sample;
     next_sample++;
     stop_flag=false;
+    
+    data.pos = SVec();
+    data.wheel_angle = 0.0;
+    data.angle = 0.0;
+    data.speed = 0;
+    data.time = 0;
     Thread::start();
     return true;
 }
@@ -83,10 +89,10 @@ void RealDataTractorModel::update_data(){
         data.wheel_angle = 0.0;
         SVec dir(next.ned_pos - cur.ned_pos);
         double dir_len(dir.length());
-        dir /= dir_len;
-        // рассёт угла и знака угла
-        //data.angle = dir_len != 0.0 ? acos(dir.x1/dir_len) * (-dir.x0 > 0 ? 1.0 : -1.0) : 0.0;
-        data.angle = 0.0;
+        if (dir_len){
+            dir /= dir_len;
+            data.angle = dir_len != 0.0 ? acos(dir.x1/1.0) * (-dir.x0 > 0 ? 1.0 : -1.0) : 0.0;           
+        }
         data.speed = cur.speed;
         data.time = cur.time - first.time;
     }

@@ -27,6 +27,7 @@ void Display() {
     model->get_data(model_data);
     tractor->setPos(model_data.pos);
     tractor->setAngle(model_data.angle);
+    tractor->setWheelsAngle(model_data.wheel_angle);
 
 }
 
