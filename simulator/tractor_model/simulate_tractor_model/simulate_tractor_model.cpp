@@ -54,7 +54,7 @@ void SimulateTractorModel::run(){
 }
 
 void SimulateTractorModel::update_data(double dt){
-    BlockTrace bt("SimulateTractorModel::update_data");
+    //BlockTrace bt("SimulateTractorModel::update_data");
 
     angle += ((tan(wheel_angle) / length) * speed) * dt;
     pos.x0 += (cos(angle + M_PI_2) * speed) * dt;
@@ -66,8 +66,8 @@ void SimulateTractorModel::update_data(double dt){
     data.angle = angle;
     data.wheel_angle = wheel_angle;
     data.speed = speed;
-    std::cout << "speed:" << speed << " angle:" << angle << " wheel_angle:" << wheel_angle << std::endl;
-    std::cout << "data:" << data << std::endl;
+    //std::cout << "speed:" << speed << " angle:" << angle << " wheel_angle:" << wheel_angle << std::endl;
+    //std::cout << "data:" << data << std::endl;
 }   
 
 void SimulateTractorModel::set_speed(double _speed){

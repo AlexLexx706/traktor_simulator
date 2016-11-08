@@ -32,6 +32,15 @@ void Display() {
 
 }
 
+void mouse_callback(int button, int state, int x, int y){
+    std::cout << "button: " << button << " state: " << state << " x:" << x << " y:" << y << std::endl;
+}
+
+void keyboard_callback(unsigned char key, int x, int y){
+    std::cout << "key: " << key << " x:" << x << " y:" << y << std::endl;
+}
+
+
 class TestThread:public Thread{
 public:
     void run(){
@@ -82,6 +91,8 @@ int main(int argc, char ** argv) {
     glutInitWindowSize(100, 100);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Tractor simulator");
+    glutKeyboardFunc(keyboard_callback);
+    glutMouseFunc(mouse_callback);
     glutDisplayFunc(Display);
     glutIdleFunc(Display);
     glutMainLoop();
