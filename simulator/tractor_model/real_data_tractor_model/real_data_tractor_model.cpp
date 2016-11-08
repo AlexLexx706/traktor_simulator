@@ -48,9 +48,10 @@ bool RealDataTractorModel::stop(){
     return true;
 }
 
-void RealDataTractorModel::get_data(TractorModelData & out_date) const{
+TractorModelData RealDataTractorModel::get_data() const{
     Mutex::ContextHelper ch(const_cast<Mutex &>(mutex));
-    out_date = data;
+    TractorModelData out_date(data);
+    return out_date;
 }
 
 void RealDataTractorModel::run(){

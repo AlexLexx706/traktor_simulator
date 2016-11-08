@@ -3,6 +3,12 @@
 #include "../base_tractor_model.h"
 #include "../../common/thread/thread.h"
 
+const double MAX_SPEED = 10.0;
+const double MIN_SPEED = -10.0;
+const double WHEEL_ANGLE_LIMMIT = 30. / 180. * M_PI;
+
+
+
 class SimulateTractorModel:public BaseTractorModel, protected Thread{
 public:
     SimulateTractorModel();
@@ -10,7 +16,9 @@ public:
     virtual bool stop();
     virtual TractorModelData get_data() const;
     void set_speed(double speed);
+    double get_speed() const {return speed;}
     void set_wheel_angle(double angle);
+    double get_wheel_angle() const {return wheel_angle;}
 
 protected:
     SVec pos;

@@ -11,7 +11,7 @@ public:
     RealDataTractorModel(BaseReader & reader);
     virtual bool start();
     virtual bool stop();
-    virtual void get_data(TractorModelData & out_date) const;
+    virtual TractorModelData get_data() const;
 
 protected:
     BaseReader & reader;

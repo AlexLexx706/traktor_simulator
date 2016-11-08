@@ -70,9 +70,13 @@ void SimulateTractorModel::update_data(double dt){
 }   
 
 void SimulateTractorModel::set_speed(double _speed){
+    _speed = _speed > MAX_SPEED ? MAX_SPEED: _speed;
+    _speed = _speed < MIN_SPEED ? MIN_SPEED: _speed;
     speed = _speed;
 }
 
-void SimulateTractorModel::set_wheel_angle(double _angle){
-    wheel_angle = _angle;
+void SimulateTractorModel::set_wheel_angle(double angle){
+    angle = angle > WHEEL_ANGLE_LIMMIT ? WHEEL_ANGLE_LIMMIT : angle;
+    angle = angle < -WHEEL_ANGLE_LIMMIT ? -WHEEL_ANGLE_LIMMIT : angle;
+    wheel_angle = angle;
 }

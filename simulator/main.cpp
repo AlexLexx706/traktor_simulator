@@ -19,15 +19,21 @@ double step=0;
 Tractor * tractor(new Tractor());
 BaseTractorModel * model(NULL);
 TractorModelData model_data;
+SimulateTractorModel* sim_model(NULL);
+RealDataTractorModel* real_data_model(NULL);
+
 const double CAMERA_SCALE_STEP = 0.1;
 const double CAMERA_MOVE_STEP = 0.1;
+const double WHEEL_ANGLE_STEP = 0.1;
+const double SPEED_STEP = 0.1;
+
 
 bool move_camera(false);
 int start_move_pos[2];
 
 void Display() {
     scene.update();
-    //tractor->update_data(model->get_data());
+    tractor->update_data(model->get_data());
 }
 
 void mouse_callback(int button, int state, int x, int y){
@@ -66,45 +72,34 @@ void motion_callback(int x, int y){
 
 void keyboard_callback(unsigned char key, int x, int y){
     std::cout << "key: " << key << " x:" << x << " y:" << y << std::endl;
+    switch (key){
+        case 'w':
+            sim_model->set_speed(sim_model->get_speed() + SPEED_STEP);
+            break;
+        case 's':
+            sim_model->set_speed(sim_model->get_speed() - SPEED_STEP);
+            break;
+        case ' ':
+            sim_model->set_speed(0.);
+            sim_model->set_wheel_angle(0.0);
+            break;
+        case 'a':
+            sim_model->set_wheel_angle(sim_model->get_wheel_angle() + WHEEL_ANGLE_STEP);
+            break;
+        case 'd':
+            sim_model->set_wheel_angle(sim_model->get_wheel_angle() - WHEEL_ANGLE_STEP);
+            break;
+    }
 }
 
 
-class TestThread:public Thread{
-public:
-    void run(){
-        while(1){
-            sleep(1000000);
-            std::cout << get_value() << std::endl;
-        }
-    }
-    void set_value(int _value){
-        Mutex::ContextHelper mh(mutex);
-        sleep(5000000);
-        value=_value;
-    };
-    
-    int get_value() const {
-        Mutex::ContextHelper mh(const_cast<Mutex &>(mutex));
-        return value;
-    }
-
-private:
-    int value;
-    Mutex mutex;
-};
-
 int main(int argc, char ** argv) {
-    //FileReader reader;
-    //reader.open("./tasks/sample.dat");
-    //model = new RealDataTractorModel(reader);
-    model = new SimulateTractorModel();
-    static_cast<SimulateTractorModel *>(model)->set_speed(1);
-    static_cast<SimulateTractorModel *>(model)->set_wheel_angle(0.5);
+    FileReader reader;
+    reader.open("./tasks/sample.dat");
+    real_data_model = new RealDataTractorModel(reader);
+    sim_model = new SimulateTractorModel();
+    model = sim_model;
     model->start();
-    // Thread::sleep(100000);
-    // model.start();
-    // model.stop();
-    // model.start();
     Grid * grid(new Grid());
     grid->set_width(500);
     grid->set_height(500);
