@@ -15,8 +15,7 @@ public:
 protected:
     SVec pos;
     double speed;
-    double Q;
-    double V_Q;
+    double angle;
     double wheel_angle;
     double length;
     double dt;

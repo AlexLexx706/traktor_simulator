@@ -10,12 +10,13 @@
 #include "common/coordinat_converter/coordinat_converter.h"
 #include "common/thread/thread.h"
 #include "tractor_model/real_data_tractor_model/real_data_tractor_model.h"
+#include "tractor_model/simulate_tractor_model/simulate_tractor_model.h"
 
 Scene scene;
 Box * box(new Box());
 double step=0;
 Tractor * tractor(new Tractor());
-RealDataTractorModel * model(NULL);
+BaseTractorModel * model(NULL);
 BaseTractorModel::Data model_data;
 
 void Display() {
@@ -56,9 +57,12 @@ private:
 };
 
 int main(int argc, char ** argv) {
-    FileReader reader;
-    reader.open("./tasks/sample.dat");
-    model = new RealDataTractorModel(reader);
+    //FileReader reader;
+    //reader.open("./tasks/sample.dat");
+    //model = new RealDataTractorModel(reader);
+    model = new SimulateTractorModel();
+    static_cast<SimulateTractorModel *>(model)->set_speed(1);
+    static_cast<SimulateTractorModel *>(model)->set_wheel_angle(0.5);
     model->start();
     // Thread::sleep(100000);
     // model.start();
@@ -68,8 +72,8 @@ int main(int argc, char ** argv) {
     scene.AddShape(tractor);
     //scene.getCamera()->setY(10);
     //scene.getCamera()->setAngle(0.5);
-    scene.getCamera()->setSize(100,100);
-    scene.getCamera()->setPos(SVec(0, -50, 0));
+    scene.getCamera()->setSize(50,50);
+    scene.getCamera()->setPos(SVec(0, 0, 0));
     tractor->setWheelsAngle(1);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
