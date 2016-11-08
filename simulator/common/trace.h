@@ -6,10 +6,10 @@
 struct BlockTrace{
     std::string name;
     BlockTrace(const std::string & _name):name(_name){
-        std::cout << name << " >>"  << std::endl;
+        std::cerr << name << " >>"  << std::endl;
     }
     ~BlockTrace(){
-        std::cout << name << " <<"  << std::endl;
+        std::cerr << name << " <<"  << std::endl;
     }
 };
 

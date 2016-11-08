@@ -22,7 +22,7 @@ void Grid::Reshape(){
     glBegin(GL_LINES);
     double start_x(-width / 2.0), step_x(width / width_step);
     double start_y(-height / 2.0), step_y(height / height_step);
-    std::cout << "grid: " << *this << std::endl;
+    //std::cout << "grid: " << *this << std::endl;
 
     for (int i = 0; i <= width_step; i++){
         glVertex2d(start_x + i * step_x, start_y);

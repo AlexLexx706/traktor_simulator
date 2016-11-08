@@ -46,7 +46,6 @@ void SimulateTractorModel::run(){
     BlockTrace bt("SimulateTractorModel::run");
 
     unsigned int cur_dt(dt*1000000);
-    std::cout << "cur_dt:" << cur_dt << std::endl;
     while (!stop_flag){
         sleep(cur_dt);
         time += dt;

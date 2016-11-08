@@ -37,7 +37,7 @@ void Display() {
 }
 
 void mouse_callback(int button, int state, int x, int y){
-    std::cout << "button: " << button << " state: " << state << " x:" << x << " y:" << y << std::endl;
+    //std::cout << "button: " << button << " state: " << state << " x:" << x << " y:" << y << std::endl;
     // масштабирование камеры
     switch (button){
         case 0:
@@ -64,14 +64,14 @@ void motion_callback(int x, int y){
             0.0);
         Camera & camera(*scene.get_camera());
         camera.set_pos(camera.get_pos() + offset);
-        std::cout << "offset: " << offset << " camera_pos:" << camera.get_pos() << std::endl;
+        //std::cout << "offset: " << offset << " camera_pos:" << camera.get_pos() << std::endl;
         start_move_pos[0] = x; start_move_pos[1] = y;
     }
 }
 
 
 void keyboard_callback(unsigned char key, int x, int y){
-    std::cout << "key: " << key << " x:" << x << " y:" << y << std::endl;
+    //std::cout << "key: " << key << " x:" << x << " y:" << y << std::endl;
     switch (key){
         case 'w':
             sim_model->set_speed(sim_model->get_speed() + SPEED_STEP);
@@ -107,8 +107,14 @@ void keyboard_callback(unsigned char key, int x, int y){
 
 
 int main(int argc, char ** argv) {
+    std::cout << "argc:" << argc << " ars: ";
+    for (int i=0; i < argc; i++){
+        std::cout << argv[i] << ' ';
+    }
+    std::cout << std::endl;
+
     FileReader reader;
-    reader.open("./tasks/sample.dat");
+    reader.open(argc > 1 ? argv[1] : "./tasks/sample.dat");
     real_data_model = new RealDataTractorModel(reader);
     sim_model = new SimulateTractorModel();
     model = sim_model;
