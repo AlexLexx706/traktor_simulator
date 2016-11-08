@@ -22,7 +22,7 @@ TractorModelData model_data;
 SimulateTractorModel* sim_model(NULL);
 RealDataTractorModel* real_data_model(NULL);
 
-const double CAMERA_SCALE_STEP = 0.1;
+const double CAMERA_SCALE_STEP = 0.01;
 const double CAMERA_MOVE_STEP = 0.1;
 const double WHEEL_ANGLE_STEP = 0.1;
 const double SPEED_STEP = 0.1;
