@@ -26,10 +26,6 @@ private:
     GLuint list_id;
 };
 
-inline std::ostream &operator<<(std::ostream &os, Color const &m) { 
-    return os << "r:" << m.r << " g:" << m.g << " b:" << m.b << " a:" << m.a;
-}
-
 inline std::ostream &operator<<(std::ostream &os, Box const &m) { 
     return os << static_cast<const BaseShape &>(m) << " width:" << m.getWidth() << " height:" << m.getHeight() << " Color:" << m.getColor();
 }

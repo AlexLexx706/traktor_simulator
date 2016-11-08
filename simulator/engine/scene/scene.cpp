@@ -7,8 +7,8 @@
 Scene::Scene():
     last_time(0),
     camera(new Camera()) {
-    camera->setCrossVisible(false);
-    AddShape(camera);
+    camera->set_cross_visible(false);
+    add_shape(camera);
 }
 
 Scene::~Scene(){
@@ -42,7 +42,7 @@ void Scene::updateDT(){
     last_time = cur_time;
 }
 
-void Scene::Update(){
+void Scene::update(){
     updateDT();
     UpdateAR(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
     glClear(GL_COLOR_BUFFER_BIT); 
@@ -53,6 +53,7 @@ void Scene::Update(){
         -camera->height/2.0, camera->height/2.0);
     glTranslated(-camera->pos.x0, -camera->pos.x1, 0.0);
     glRotated(-camera->angle / M_PI * 180.0, 0.0f, 0.0f, 1.0f);
+    glScaled(camera->scale, camera->scale, camera->scale);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
@@ -60,12 +61,12 @@ void Scene::Update(){
 
     for(std::list<BaseShape *>::iterator iter = shapes.begin(), end=shapes.end();
         iter != end; iter++){
-        (*iter)->Update();
+        (*iter)->update();
     }
     glutSwapBuffers();
 }
 
-bool Scene::AddShape(BaseShape * shape){
+bool Scene::add_shape(BaseShape * shape){
     std::map<BaseShape *, std::list<BaseShape *>::iterator>::iterator iter =
         shapes_map.find(shape);
 
@@ -75,7 +76,7 @@ bool Scene::AddShape(BaseShape * shape){
     }
     for(std::list<BaseShape *>::iterator iter = shapes.begin(), end=shapes.end();
         iter != end; iter++){
-        if ((*iter)->HasShape(shape)){
+        if ((*iter)->has_shape(shape)){
             return false;
         }
     }
@@ -87,7 +88,7 @@ bool Scene::AddShape(BaseShape * shape){
     return false;
 }
 
-bool Scene::RemoveShape(BaseShape * shape){
+bool Scene::remove_shape(BaseShape * shape){
     std::map<BaseShape *, std::list<BaseShape *>::iterator>::iterator iter =
         shapes_map.find(shape);
 

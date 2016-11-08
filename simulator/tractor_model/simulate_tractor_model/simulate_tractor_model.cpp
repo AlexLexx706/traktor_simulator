@@ -36,9 +36,10 @@ bool SimulateTractorModel::stop(){
     return true;
 }
 
-void SimulateTractorModel::get_data(Data & out_date) const{
+TractorModelData SimulateTractorModel::get_data() const{
     Mutex::ContextHelper ch(const_cast<Mutex &>(mutex));
-    out_date = data;
+    TractorModelData out(data);
+    return out;
 }
 
 void SimulateTractorModel::run(){
@@ -66,8 +67,6 @@ void SimulateTractorModel::update_data(double dt){
     data.angle = angle;
     data.wheel_angle = wheel_angle;
     data.speed = speed;
-    //std::cout << "speed:" << speed << " angle:" << angle << " wheel_angle:" << wheel_angle << std::endl;
-    //std::cout << "data:" << data << std::endl;
 }   
 
 void SimulateTractorModel::set_speed(double _speed){

@@ -8,7 +8,7 @@ public:
     SimulateTractorModel();
     virtual bool start();
     virtual bool stop();
-    virtual void get_data(Data & out_date) const;
+    virtual TractorModelData get_data() const;
     void set_speed(double speed);
     void set_wheel_angle(double angle);
 
@@ -23,7 +23,7 @@ protected:
 
     Mutex mutex;
     bool stop_flag;
-    Data data;
+    TractorModelData data;
     void run();
     void update_data(double dt);
 };

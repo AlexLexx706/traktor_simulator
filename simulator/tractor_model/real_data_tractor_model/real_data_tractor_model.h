@@ -11,13 +11,13 @@ public:
     RealDataTractorModel(BaseReader & reader);
     virtual bool start();
     virtual bool stop();
-    virtual void get_data(Data & out_date) const;
+    virtual void get_data(TractorModelData & out_date) const;
 
 protected:
     BaseReader & reader;
     std::list<BaseReader::Data>::const_iterator cur_sample;
     std::list<BaseReader::Data>::const_iterator next_sample;
-    BaseTractorModel::Data data;
+    TractorModelData data;
     Mutex mutex;
     bool stop_flag;
     void run();

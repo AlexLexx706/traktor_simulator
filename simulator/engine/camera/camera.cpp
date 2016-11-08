@@ -1,6 +1,9 @@
 #include "camera.h"
 
-Camera::Camera():width(10.0), height(10.0){
+Camera::Camera():
+    width(10.0),
+    height(10.0),
+    scale(1.0){
 
 }
 

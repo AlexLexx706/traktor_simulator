@@ -12,7 +12,7 @@ BaseShape::~BaseShape(){
     }
 }
 
-bool BaseShape::HasShape(BaseShape * child, bool reqursive){
+bool BaseShape::has_shape(BaseShape * child, bool reqursive){
     if (!child){
         return false;
     }
@@ -23,7 +23,7 @@ bool BaseShape::HasShape(BaseShape * child, bool reqursive){
     if (reqursive) {
         for (std::list<BaseShape *>::iterator iter=childs.begin(), end=childs.end();
             iter != end; iter++){
-            if ((*iter)->HasShape(child)){
+            if ((*iter)->has_shape(child)){
                 return true;
             }
         }
@@ -32,8 +32,8 @@ bool BaseShape::HasShape(BaseShape * child, bool reqursive){
 } 
 
 
-bool BaseShape::AddChild(BaseShape * child) {
-    if (HasShape(child)){
+bool BaseShape::add_child(BaseShape * child) {
+    if (has_shape(child)){
         return false;
     }
 
@@ -45,8 +45,8 @@ bool BaseShape::AddChild(BaseShape * child) {
 }
 
 
-bool BaseShape::RemoveChild(BaseShape * child){
-    if (!HasShape(child)){
+bool BaseShape::remove_child(BaseShape * child){
+    if (!has_shape(child)){
         return true;
     }
     std::map<BaseShape *, std::list<BaseShape *>::iterator>::iterator iter =
@@ -59,7 +59,7 @@ bool BaseShape::RemoveChild(BaseShape * child){
     return true;
 }
 
-void BaseShape::Update(){
+void BaseShape::update(){
     if (reshape){
         Reshape();
         reshape=false;
@@ -75,7 +75,7 @@ void BaseShape::Update(){
 
     for (std::list<BaseShape *>::iterator iter=childs.begin(), end=childs.end();
         iter != end; iter++) {
-        (*iter)->Update();
+        (*iter)->update();
     }
     glPopMatrix();
 }

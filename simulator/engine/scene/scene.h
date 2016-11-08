@@ -10,12 +10,12 @@ class Scene{
 public:
     Scene();
     ~Scene();
-    virtual void Update();
-    bool AddShape(BaseShape * shape);
-    bool RemoveShape(BaseShape * shape);
-    double GetDt() const {return dt;};
-    std::list<BaseShape *> & GetShapes(){return shapes;}
-    Camera * getCamera() const {return camera;}
+    virtual void update();
+    bool add_shape(BaseShape * shape);
+    bool remove_shape(BaseShape * shape);
+    double get_dt() const {return dt;};
+    std::list<BaseShape *> & get_shapes(){return shapes;}
+    Camera * get_camera() const {return camera;}
     
 protected:
     std::list<BaseShape *> shapes;

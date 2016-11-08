@@ -3,6 +3,7 @@
 #include "../shapes/base_shape.h"
 
 class Box;
+class TractorModelData;
 
 class Tractor: public BaseShape {
 public:
@@ -10,6 +11,7 @@ public:
     void setLenght(double length);
     void setWidth(double width);
     void setWheelsAngle(double angle);
+    void update_data(const TractorModelData & data);
 private:
     Box * body;
     Box * back_left_wheel;

@@ -12,23 +12,23 @@ class BaseShape{
 public:
     BaseShape();
     virtual ~BaseShape();
-    virtual void Update();
-    bool HasShape(BaseShape * child, bool reqursive=false); 
-    bool AddChild(BaseShape * child);
-    bool RemoveChild(BaseShape * child);
-    const std::list<BaseShape*> & GetChilds(){return childs;};
+    virtual void update();
+    bool has_shape(BaseShape * child, bool reqursive=false); 
+    bool add_child(BaseShape * child);
+    bool remove_child(BaseShape * child);
+    const std::list<BaseShape*> & get_childs(){return childs;};
 
-    void setPos(const SVec & pos){this->pos=pos;}
-    const SVec & getPos() const {return pos;};
+    void set_pos(const SVec & _pos){pos=_pos;}
+    const SVec & get_pos() const {return pos;};
 
-    void setAngle(double angle) {this->angle=angle;}
+    void get_angle(double _angle) {angle=_angle;}
     double getAngle() const {return angle;}
-    void setX(double x){pos.x0=x;}
-    void setY(double y){pos.x1=y;}
-    double getX() const {return pos.x0;}
-    double getY() const {return pos.x1;}
-    void setCrossVisible(bool visible){show_cross=visible;}
-    bool isCrossVisible() const {return show_cross;}
+    void set_x(double x){pos.x0=x;}
+    void set_y(double y){pos.x1=y;}
+    double get_x() const {return pos.x0;}
+    double get_y() const {return pos.x1;}
+    void set_cross_visible(bool visible){show_cross=visible;}
+    bool is_cross_visible() const {return show_cross;}
 
 protected:
     virtual void Reshape(){};
@@ -46,7 +46,7 @@ protected:
 };
 
 inline std::ostream &operator<<(std::ostream &os, BaseShape const &m) { 
-    return os << "pos: " << m.getPos() << " angle:" << m.getAngle();
+    return os << "pos: " << m.get_pos() << " angle:" << m.getAngle();
 }
 
 #endif // __BASE_ITEM__
