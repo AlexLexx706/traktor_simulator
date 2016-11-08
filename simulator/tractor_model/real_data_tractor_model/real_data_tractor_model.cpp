@@ -12,7 +12,7 @@ RealDataTractorModel::RealDataTractorModel(BaseReader & _reader):
 }
 
 bool RealDataTractorModel::start() {
-    //BlockTrace bt("RealDataTractorModel::start");
+    BlockTrace bt("RealDataTractorModel::start");
 
     if (!stop_flag) {
         std::cerr << "thread is active" << std::endl;
@@ -38,7 +38,7 @@ bool RealDataTractorModel::start() {
 }
 
 bool RealDataTractorModel::stop(){
-    //BlockTrace bt("RealDataTractorModel::stop");
+    BlockTrace bt("RealDataTractorModel::stop");
     if (stop_flag) {
         std::cerr << "thread is not active" << std::endl;
         return false;
@@ -55,9 +55,14 @@ TractorModelData RealDataTractorModel::get_data() const{
 }
 
 void RealDataTractorModel::run(){
-    //BlockTrace bt("RealDataTractorModel::run");
+    BlockTrace bt("RealDataTractorModel::run");
+    std::cout << "data_size:" << reader.get_data().size() << std::endl;
+    std::cout << "stop_flag: " << stop_flag << " has_next_sample:" << (next_sample != reader.get_data().end()) << std::endl;
+
+
     while(!stop_flag && next_sample != reader.get_data().end()){
         sleep((next_sample->time - cur_sample->time) * 1000);
+        std::cout << "sleep" << std::endl;
         cur_sample = next_sample;
         next_sample++;
         update_data();

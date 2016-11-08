@@ -75,19 +75,32 @@ void keyboard_callback(unsigned char key, int x, int y){
     switch (key){
         case 'w':
             sim_model->set_speed(sim_model->get_speed() + SPEED_STEP);
+            model = sim_model;
             break;
         case 's':
             sim_model->set_speed(sim_model->get_speed() - SPEED_STEP);
+            model = sim_model;
             break;
         case ' ':
             sim_model->set_speed(0.);
             sim_model->set_wheel_angle(0.0);
+            model = sim_model;
             break;
         case 'a':
             sim_model->set_wheel_angle(sim_model->get_wheel_angle() + WHEEL_ANGLE_STEP);
+            model = sim_model;
             break;
         case 'd':
             sim_model->set_wheel_angle(sim_model->get_wheel_angle() - WHEEL_ANGLE_STEP);
+            model = sim_model;
+            break;
+        case 'e':
+            model = real_data_model;
+            real_data_model->start();
+            break;
+        case 'r':
+            model = real_data_model;
+            real_data_model->stop();
             break;
     }
 }
