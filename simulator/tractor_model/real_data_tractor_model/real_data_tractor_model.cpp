@@ -76,8 +76,7 @@ void RealDataTractorModel::update_data(){
         const BaseReader::Data & cur(*cur_sample);
         data.pos = (cur.ned_pos - first.ned_pos) * EARTH_RADIUS;
         data.wheel_angle = 0.0;
-       // data.angle = data.angle;
-        data.angle = 0.0;
+        data.angle = data.angle;
         data.speed = cur.speed;
         data.time = cur.time - first.time;
     } else {

@@ -3,7 +3,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=-lX11 -lGL -lGLU -lglut -lm -pthread
-OBJS=main.o coordinat_converter.o file_reader.o SMat.o base_shape.o box.o scene.o tractor.o camera.o real_data_tractor_model.o thread.o
+OBJS=main.o coordinat_converter.o file_reader.o SMat.o base_shape.o box.o scene.o tractor.o camera.o real_data_tractor_model.o thread.o simulate_tractor_model.o
 
 all: main
 	
@@ -35,6 +35,9 @@ tractor.o: simulator/engine/shapes/base_shape.h simulator/engine/tractor/tractor
 
 real_data_tractor_model.o: simulator/tractor_model/base_tractor_model.h simulator/tractor_model/real_data_tractor_model/real_data_tractor_model.h simulator/tractor_model/real_data_tractor_model/real_data_tractor_model.cpp
 	$(CC) $(CFLAGS) simulator/tractor_model/real_data_tractor_model/real_data_tractor_model.cpp
+
+simulate_tractor_model.o: simulator/tractor_model/base_tractor_model.h simulator/tractor_model/simulate_tractor_model/simulate_tractor_model.h simulator/tractor_model/simulate_tractor_model/simulate_tractor_model.cpp
+	$(CC) $(CFLAGS) simulator/tractor_model/simulate_tractor_model/simulate_tractor_model.cpp
 
 
 camera.o: simulator/engine/shapes/base_shape.h simulator/engine/camera/camera.h simulator/engine/camera/camera.cpp 
