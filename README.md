@@ -27,10 +27,10 @@
 Сборка и запуск приложения под linux(ubuntu):
 ---------------------------------------------
 
-    1) установить библиотеки: libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libglew-dev libboost-all-dev
-        sudo apt-get install libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libglew-dev libboost-all-dev
+    1) установить библиотеки: libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
+        sudo apt-get install libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
 
-    2) Соберите проект:
+    2) Соберите проект:ы
         make
 
     3) Запуск приложения:
