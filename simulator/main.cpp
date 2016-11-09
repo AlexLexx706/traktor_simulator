@@ -12,6 +12,7 @@
 #include "common/thread/thread.h"
 #include "tractor_model/real_data_tractor_model/real_data_tractor_model.h"
 #include "tractor_model/simulate_tractor_model/simulate_tractor_model.h"
+#include <sstream>
 
 Scene scene;
 Box * box(new Box());
@@ -21,19 +22,27 @@ BaseTractorModel * model(NULL);
 TractorModelData model_data;
 SimulateTractorModel* sim_model(NULL);
 RealDataTractorModel* real_data_model(NULL);
+Scene::Text * info_text(new Scene::Text("", SVec(0, 0.01, 0), GLUT_BITMAP_TIMES_ROMAN_24));
+
 
 const double CAMERA_SCALE_STEP = 0.01;
-const double CAMERA_MOVE_STEP = 0.1;
-const double WHEEL_ANGLE_STEP = 0.1;
+const double CAMERA_MOVE_STEP = 0.05;
+const double WHEEL_ANGLE_STEP = 0.05;
 const double SPEED_STEP = 0.1;
-
 
 bool move_camera(false);
 int start_move_pos[2];
 
+
 void Display() {
     scene.update();
-    tractor->update_data(model->get_data());
+    TractorModelData data(model->get_data());
+    tractor->update_data(data);
+    std::stringstream ss;
+    ss.setf(std::ios::fixed);\
+    ss.precision(3);
+    ss << "x:" << data.pos.x0 << " y:" << data.pos.x1 << "  angle:" << data.angle << "  w_angle:" << data.wheel_angle << "  speed:" << data.speed << "  time:" << data.time;
+    info_text->set_text(ss.str());
 }
 
 void mouse_callback(int button, int state, int x, int y){
@@ -122,16 +131,19 @@ int main(int argc, char ** argv) {
     Grid * grid(new Grid());
     grid->set_width(500);
     grid->set_height(500);
+    grid->set_cross_length(50);
     scene.add_shape(grid);
     scene.add_shape(tractor);
     //scene.get_camera()->set_y(10);
     //scene.get_camera()->get_angle(0.5);
     scene.get_camera()->setSize(50,50);
     scene.get_camera()->set_pos(SVec(0, 0, 0));
+    scene.add_text(info_text);
     tractor->setWheelsAngle(1);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glShadeModel (GL_FLAT); // The default value is GL_SMOOTH
     glDisable(GL_DEPTH_TEST);
     glutInitWindowSize(100, 100);
     glutInitWindowPosition(0, 0);

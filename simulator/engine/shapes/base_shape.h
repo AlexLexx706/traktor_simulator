@@ -29,6 +29,8 @@ public:
     double get_y() const {return pos.x1;}
     void set_cross_visible(bool visible){show_cross=visible;}
     bool is_cross_visible() const {return show_cross;}
+    void set_cross_length(double length){cross_len=length;}
+    double get_cross_length() const {return cross_len;}
 
 protected:
     virtual void Reshape(){};

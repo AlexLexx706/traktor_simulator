@@ -3,7 +3,6 @@
 #include <GL/glut.h>
 #include "../camera/camera.h"
 
-
 Scene::Scene():
     last_time(0),
     camera(new Camera()) {
@@ -14,6 +13,10 @@ Scene::Scene():
 Scene::~Scene(){
     for(std::list<BaseShape *>::iterator iter = shapes.begin(), end=shapes.end();
         iter != end; iter++){
+        delete (*iter);
+    }
+    for (std::list<Text *>::iterator iter = texts.begin(), end = texts.end();
+            iter != end; iter++){
         delete (*iter);
     }
 }
@@ -36,11 +39,13 @@ void Scene::UpdateAR(int w, int h){
     }
 }
 
+
 void Scene::updateDT(){
     int cur_time = glutGet(GLUT_ELAPSED_TIME);
     dt = (cur_time - last_time)/1000.;
     last_time = cur_time;
 }
+
 
 void Scene::update(){
     updateDT();
@@ -54,14 +59,30 @@ void Scene::update(){
     glTranslated(-camera->pos.x0, -camera->pos.x1, 0.0);
     glRotated(-camera->angle / M_PI * 180.0, 0.0f, 0.0f, 1.0f);
     glScaled(camera->scale, camera->scale, camera->scale);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
 
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     for(std::list<BaseShape *>::iterator iter = shapes.begin(), end=shapes.end();
         iter != end; iter++){
         (*iter)->update();
+    }
+
+    glMatrixMode (GL_PROJECTION); // use PROJECTION matrix
+    glLoadIdentity();
+    gluOrtho2D(0, 1.0, 0.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    //out_string_at(GLUT_BITMAP_TIMES_ROMAN_24, 14, 5, "Hello World");
+    for (std::list<Text *>::iterator iter = texts.begin(), end = texts.end();
+            iter != end; iter++){
+
+        glColor4d(
+            (*iter)->color.r, (*iter)->color.g,
+            (*iter)->color.b, (*iter)->color.a);
+        draw_text(
+            (*iter)->font, (*iter)->pos.x0, (*iter)->pos.x1, (*iter)->str);
     }
     glutSwapBuffers();
 }
@@ -97,5 +118,49 @@ bool Scene::remove_shape(BaseShape * shape){
     }
     shapes.erase(iter->second);
     shapes_map.erase(iter);
+    return true;
+}
+
+void Scene::draw_text(void *font, double x, double y, const std::string & str)
+{
+    font = font ? font: GLUT_BITMAP_8_BY_13;
+    glRasterPos2d(x, y); // set position
+    
+    for (std::string::const_iterator iter=str.begin(), end=str.end();
+            iter !=end; iter++){
+        glutBitmapCharacter(font, *iter);
+    }
+}
+
+bool Scene::add_text(Text * text){
+    if (!text){
+        std::cerr << "text == NULL" << std::endl;
+        return false;
+    }
+    std::map<Text *, std::list<Text *>::iterator>::iterator iter = texts_map.find(text);
+
+    if (iter != texts_map.end()){
+        std::cerr << "text already in scene" << std::endl;
+        return false;
+    }
+    texts_map.insert(
+        std::map<Text *, std::list<Text *>::iterator>::value_type(
+            text, texts.insert(texts.end(), text)));
+    return true;
+}
+
+bool Scene::remove_text(Text * text){
+    if (!text){
+        std::cerr << "text == NULL" << std::endl;
+        return false;
+    }
+    std::map<Text *, std::list<Text *>::iterator>::iterator iter = texts_map.find(text);
+
+    if (iter == texts_map.end()){
+        std::cerr << "text not exist in scene" << std::endl;
+        return false;
+    }
+    texts.erase(iter->second);
+    texts_map.erase(iter);
     return true;
 }
