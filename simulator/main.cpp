@@ -15,11 +15,8 @@
 #include <sstream>
 
 Scene scene;
-Box * box(new Box());
-double step=0;
 Tractor * tractor(new Tractor());
 BaseTractorModel * model(NULL);
-TractorModelData model_data;
 SimulateTractorModel* sim_model(NULL);
 RealDataTractorModel* real_data_model(NULL);
 Scene::Text * info_text(new Scene::Text("", SVec(0, 0.01, 0), GLUT_BITMAP_TIMES_ROMAN_24));
