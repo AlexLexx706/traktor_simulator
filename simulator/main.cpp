@@ -13,6 +13,7 @@
 #include "tractor_model/real_data_tractor_model/real_data_tractor_model.h"
 #include "tractor_model/simulate_tractor_model/simulate_tractor_model.h"
 #include <sstream>
+#include <stdio.h>
 
 Scene scene;
 Tractor * tractor(new Tractor());
@@ -30,15 +31,30 @@ const double SPEED_STEP = 0.1;
 bool move_camera(false);
 int start_move_pos[2];
 
+static int fps_counter = 0;
+static int cur_fps = 0;
+static long long fps_start_time = Thread::get_timestemp_ms();
+static long long cur_time;
+
 
 void Display() {
+    cur_time = Thread::get_timestemp_ms();
+    //fprintf(stderr, "cur_time:%lld s_t:%lld\n", cur_time, fps_start_time + 1000LL);
+
+    if (cur_time  > (fps_start_time + 1000LL)) {
+        //fprintf(stderr, "!!\n");
+        cur_fps = fps_counter;
+        fps_counter = 0;
+        fps_start_time = cur_time;
+    }
+    fps_counter++;
     scene.update();
     TractorModelData data(model->get_data());
     tractor->update_data(data);
     std::stringstream ss;
     ss.setf(std::ios::fixed);\
     ss.precision(3);
-    ss << "x:" << data.pos.x0 << " y:" << data.pos.x1 << "  angle:" << data.angle << "  w_angle:" << data.wheel_angle << "  speed:" << data.speed << "  time:" << data.time;
+    ss << "fps:" << cur_fps << " x:" << data.pos.x0 << " y:" << data.pos.x1 << "  angle:" << data.angle << "  w_angle:" << data.wheel_angle << "  speed:" << data.speed << "  time:" << data.time;
     info_text->set_text(ss.str());
 }
 

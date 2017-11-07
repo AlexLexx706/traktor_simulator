@@ -2,10 +2,18 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <iostream>
+#include <sys/time.h>
 
 void * thread_fun(void * data) {
     static_cast<Thread *>(data)->run();
     return NULL;
+}
+
+long long Thread::get_timestemp_ms() {
+    struct timeval te; 
+    gettimeofday(&te, NULL);
+    long long milliseconds = te.tv_sec*1000LL + te.tv_usec/1000;
+    return milliseconds;
 }
 
 // linux realithation

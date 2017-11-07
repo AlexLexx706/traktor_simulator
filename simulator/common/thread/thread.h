@@ -11,6 +11,7 @@ public:
     virtual void run();
     //sleep microsecond
     static void sleep(unsigned int);
+    static long long get_timestemp_ms();
 private: 
     void * data;
 };
